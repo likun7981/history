@@ -1,5 +1,5 @@
 {
-  "name": "history",
+  "name": "@likun7981/history",
   "version": "4.7.2",
   "description": "Manage session history with JavaScript",
   "repository": "ReactTraining/history",

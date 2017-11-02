@@ -131,13 +131,15 @@ const createHashHistory = (props = {}) => {
       setState()
     } else {
       const action = 'POP'
-
+      goForward();
       transitionManager.confirmTransitionTo(location, action, getUserConfirmation, (ok) => {
         if (ok) {
+          goBack();
           setState({ action, location })
-        } else {
-          revertPop(location)
         }
+        // else {
+        //   revertPop(location)
+        // }
       })
     }
   }
