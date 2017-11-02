@@ -16,17 +16,24 @@ const createTransitionManager = () => {
         prompt = null
     }
   }
-
+  let confirmClosed = true;
   const confirmTransitionTo = (location, action, getUserConfirmation, callback) => {
     // TODO: If another transition starts while we're still confirming
     // the previous one, we may end up in a weird state. Figure out the
     // best way to handle this.
+    const cb = (ok) => {
+      confirmClosed = true;
+      callback(ok)
+    }
     if (prompt != null) {
       const result = typeof prompt === 'function' ? prompt(location, action) : prompt
 
       if (typeof result === 'string') {
         if (typeof getUserConfirmation === 'function') {
-          getUserConfirmation(result, callback)
+          if(confirmClosed) {
+            confirmClosed = false
+            getUserConfirmation(result, cb)
+          }
         } else {
           warning(
             false,
